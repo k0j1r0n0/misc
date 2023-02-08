@@ -1,0 +1,79 @@
+/*
+- Filename: standings.css
+- Author: @k0j1r0n0
+- Date: February 3, 2023 (last updated: February 8, 2023)
+*/
+body {
+  margin: 30px 50px;
+  padding: 0;
+}
+h1 {
+  background: #E0F1FF;
+  padding: 40px 0px;
+  margin-bottom: 50px;
+  text-align: center;
+  font-size: 24pt;
+  letter-spacing: 2px;
+  color: #444444;
+}
+h2 {
+	background: linear-gradient(transparent 60%, #c8f1ff 60%);
+  margin: 20px 0px;
+  font-size: 20pt;
+}
+ul {
+  color: #595857;
+}
+a, a:visited {
+  color: #1a0dab;    /* Google */
+}
+table {
+  width: 100%;
+}
+th, td {
+  padding: 10px 10px;
+  text-align: center;
+  width: 100px;
+}
+th {
+  font-weight: bold;
+  font-size: 0.875rem;
+  background: lightgray;
+  color: #595857;
+}
+.stripe-table {
+  border-collapse: collapse;
+}  
+.stripe-table tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+.stripe-table tr:nth-child(even) {
+  background-color: white;
+}
+.time::before {
+  content: "\A";
+}
+.time {
+  font-size: 90%;
+  color: gray;
+}
+.total-score {
+  font-size: 100%;
+  color: #0000FF;    /* AtCoder */
+}
+.score {
+  font-size: 100%;
+  color: #00AA3E;    /* AtCoder */
+}
+
+/*
+#first::before {
+  content: '🥇';
+}
+#second::before {
+  content: '🥈';
+}
+#third::before {
+  content: '🥉';
+}
+*/
