@@ -1,2 +1,2 @@
-atcoder-standings-table/html/*.html
-atcoder-standings-table/json/*.json
+./html/*.html
+./json/*.json
