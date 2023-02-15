@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-- Script: create_standings_html.py
+- Script: generate_standings.py
 - Author: @k0j1r0n0
-- Date: February 3, 2023 (last updated: February 8, 2023)
+- Date: February 3, 2023 (last updated: February 15, 2023)
 - Description
-  - For a specific AtCoder contest, you can filter results by affiliation 
-    and output a table of results. (Note that an AtCoder account is required.)
+  - For a specific AtCoder contest, you can filter the contest result
+    by participants' affiliation and generate standings (.json and .html).
+    (Note that an AtCoder account is required.)
   - Output files are as follows:
     - ./json/{contest_id}.json
-    - ./html/{contest_id}.html (the standings of the selected AtCoder contest)
+    - ./html/{contest_id}.html
+      (the standings of the selected AtCoder contest)
 """
-
 import datetime
 import json
 import pwinput
@@ -22,14 +23,14 @@ import urllib.parse
 from bs4 import BeautifulSoup
 from time import sleep
 
-login_url = "https://atcoder.jp/login"
 json_dir = "./json"
 html_dir = "./html"
 css_path = "../standings.css"
+atcoder_login_url = "https://atcoder.jp/login"
 
-def login(username, password):
+def login_to_atcoder(username, password):
     session = requests.session()
-    response = session.get(login_url)                               # access with GET to get cookies
+    response = session.get(atcoder_login_url)                       # access with GET method to get cookies
     revel_session = response.cookies.get_dict()["REVEL_SESSION"]    # get the cookie "REVEL_SESSION"
     revel_session = urllib.parse.unquote(revel_session)             # decode "revel_session"
     
@@ -44,13 +45,11 @@ def login(username, password):
       "password": password,
       "csrf_token": csrf_token,
     }
-    data = {
-      "continue": "https://atcoder.jp/"
-    }
     try:
-        response = session.post(login_url, headers = headers, params = login_data, data = data)
+        response = session.post(atcoder_login_url, headers = headers, params = login_data)
+        response.raise_for_status()    # detect 4xx/5xx status code
     except requests.exceptions.RequestException as e:
-        sys.exit("Requests error: ", e)
+        sys.exit("Error: ", e)
     print("Successfully logged in to Atcoder!")
     
     return session
@@ -89,12 +88,12 @@ def arrange_standings_html(contest_id, affiliation, standings_all_json):
     #----- prepare table html texts ------------------------------------------------------------#
     table_html = "<tbody>\n"
     filtered_json_filepath = f"{json_dir}/{contest_id}_filtered.json"
-    with open(filtered_json_filepath, "w") as f:
-        print("")    # create an empty file
+    with open(filtered_json_filepath, "w") as file:
+        file.write("")    # create an empty file
     for participant_index in range(0, participants_number):
         if standings_data[participant_index]["Affiliation"] == affiliation:
-            with open(filtered_json_filepath, "a") as f:    # save filtered standings json data
-                json.dump(standings_data[participant_index], fp = f, ensure_ascii = False, indent = 2)
+            with open(filtered_json_filepath, "a") as file:    # save filtered standings json data
+                json.dump(standings_data[participant_index], fp = file, ensure_ascii = False, indent = 2)
 
             contents = []
             rank = standings_data[participant_index]["Rank"]
@@ -169,7 +168,7 @@ if __name__ == "__main__":
     print("[Enter login information]")
     login_username = input("  Username: ")
     login_password = pwinput.pwinput(prompt = "  Password: ")
-    session = login(login_username, login_password)
+    session = login_to_atcoder(login_username, login_password)
     
     #----- enter basic infomation to get the certain contest results ----------#
     print("--------------------------------------------------")
@@ -181,8 +180,8 @@ if __name__ == "__main__":
     json_filepath = f"{json_dir}/{contest_id}.json"    
     try:
         standings_all_data = session.get(standings_url).text
-        with open(json_filepath, "w") as f:    # save the all standings data of the specific contest
-            json.dump(json.loads(standings_all_data), fp = f, ensure_ascii = False, indent = 2)
+        with open(json_filepath, "w") as file:    # save the all standings data of the specific contest
+            json.dump(json.loads(standings_all_data), fp = file, ensure_ascii = False, indent = 2)
     except requests.exceptions.RequestException as e:
         sys.exit("Could not retrieve the ranking data (.json) of the contest. Try again.")
 
@@ -191,10 +190,10 @@ if __name__ == "__main__":
     arranged_standings_html = arrange_standings_html(contest_id, affiliation, standings_all_json)
 
     html_filepath = f"{html_dir}/{contest_id}.html"
-    with open(html_filepath, "w") as f:
-        print(arranged_standings_html, file = f)
+    with open(html_filepath, "w") as file:
+        file.write(arranged_standings_html)
     print("--------------------------------------------------")
     print("[Output]")
-    print("  (1) %s" % html_filepath)
-    print("  (2) %s" % json_filepath)
+    print("  - %s" % html_filepath)
+    print("  - %s" % json_filepath)
     print("Done.")
