@@ -1,7 +1,7 @@
 /*
 - Filename: standings.css
 - Author: @k0j1r0n0
-- Date: February 3, 2023 (last updated: February 8, 2023)
+- Date: February 3, 2023 (last updated: February 16, 2023)
 */
 body {
   margin: 30px 50px;
@@ -66,7 +66,6 @@ th {
   color: #00AA3E;    /* AtCoder */
 }
 
-/*
 #first::before {
   content: '🥇';
 }
@@ -76,4 +75,3 @@ th {
 #third::before {
   content: '🥉';
 }
-*/
