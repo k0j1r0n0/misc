@@ -26,16 +26,21 @@
 
 また、次のPythonライブラリはインストールが必要です。
 - Pythonライブラリ（①：`generate_standings.py`、②：`generate_best_standings.py`）
+  - beautifulsoup4（①）
+  - pandas（②）
   - pwinput（①、②）
   - requests（①、②）
   - urllib3（①、②）
-  - beautifulsoup4（①）
-  - pandas（②）
+
+ライブラリのインストールは下記を参考にしてください。（`pip`による例）
+```sh
+$ pip install beautifulsoup4
+```
 
 実行する前に下記のように手元の環境にクローンし、スクリプトのあるディレクトリに移動してください。
 ```sh
 $ git clone https://github.com/k0j1r0n0/misc.git
-$ mv misc/atcoder-standings-table
+$ cd misc/atcoder-standings-table
 ```
 そして、ディレクトリ`html`、`json`があることを確認してください。
 
@@ -68,8 +73,8 @@ $ mv misc/atcoder-standings-table
   Generating files...
   --------------------------------------------------
   [Output]
-    (1) ./html/abc123.html
-    (2) ./json/abc123.json
+    - ./html/abc123.html
+    - ./json/abc123.json
   Done.
   ```
 
@@ -86,7 +91,7 @@ $ mv misc/atcoder-standings-table
 - 引数にあらかじめ指定する場合としない場合の2つが選べます。
   - **引数に指定する場合**
     ```sh
-    $ mv misc/atcoder-standings-table
+    $ cd misc/atcoder-standings-table
     $ python generate_best_standings.py -u k0j1r0n0 -a "XXX株式会社" -c abc123 abc111 arc101 -t "XYZ部主催 競技プログラミングコンテスト"
     ```
     - コンソール画面の例
