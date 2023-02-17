@@ -32,9 +32,9 @@
   - requests（①、②）
   - urllib3（①、②）
 
-ライブラリのインストールは下記を参考にしてください。（`pip`による例）
+1つずつインストールするのは手間なので、コマンド`pip`とファイル`requirements.txt`を使って一括でインストールしてください。
 ```sh
-$ pip install beautifulsoup4
+$ pip install -r requirements.txt
 ```
 
 実行する前に下記のように手元の環境にクローンし、スクリプトのあるディレクトリに移動してください。
@@ -53,7 +53,7 @@ $ cd misc/atcoder-standings-table
   - `Password`：AtCoderアカウントのパスワード
   - `Contest ID`：コンテストのID
     - AtCoder Beginner Contest 123の場合、コンテストのURL`https://atcoder.jp/contests/abc123`のうち`abc123`がIDとなります。
-  - `Affiliation`：コンテスト登録時の所属団体名
+  - `Affiliation`：フィルタリングしたい所属団体名
 
 - 実行例
   ```sh
@@ -87,7 +87,7 @@ $ cd misc/atcoder-standings-table
   - `Password`：AtCoderアカウントのパスワード
   - `Contest ID`：コンテストのID（generate_standings.pyと同様）
     - スペース区切りで複数入力が可能。（例：`abc123` `abc111` `arc101`）
-  - `Affiliation`：コンテスト登録時の所属団体名
+  - `Affiliation`：フィルタリングしたい所属団体名
 - 引数にあらかじめ指定する場合としない場合の2つが選べます。
   - **引数に指定する場合**
     ```sh
